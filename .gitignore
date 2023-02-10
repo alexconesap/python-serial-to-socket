@@ -1,0 +1,21 @@
+# IDE
+# We can also put these files/folders into .git/info/exclude to be part of each developer choice
+/.idea
+/.vscode
+/nbproject
+
+# Vagrant files
+.vagrant
+
+# OS files
+.DS_Store
+
+sts.conf
+stoip.conf
+client.conf
+test.conf
+
+# Python compiled files
+*.pyc
+
+/nbproject/private/

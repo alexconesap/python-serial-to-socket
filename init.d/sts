@@ -1,0 +1,47 @@
+#!/bin/sh
+# /etc/init.d/sts
+### BEGIN INIT INFO
+# Provides:          sts
+# Required-Start:    $all
+# Required-Stop:     $all
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Yakuma sts (Serial To Socket) service
+# Description:       Yakuma sts (Serial To Socket) service
+### END INIT INFO
+# YAKUMA Python STS Script wrapper
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/bin
+DAEMON=/home/pi/sts/sts_service.sh
+PIDFILE=/var/run/sts.pid
+
+. /lib/lsb/init-functions
+
+test -x $DAEMON || exit 0
+
+case "$1" in
+  start)
+     log_daemon_msg "Starting Yakuma STS (Serial To Socket)"
+     start_daemon -p $PIDFILE $DAEMON
+     log_end_msg $?
+   ;;
+  stop)
+     log_daemon_msg "Stopping Yakuma STS (Serial To Socket)"
+     killproc -p $PIDFILE $DAEMON
+     PID=`ps x |grep sts | head -1 | awk '{print $1}'`
+     kill -9 $PID
+     log_end_msg $?
+   ;;
+  restart)
+     $0 stop
+     $0 start
+   ;;
+  status)
+     status_of_proc -p $PIDFILE $DAEMON sts && exit 0 || exit $?
+   ;;
+ *)
+   echo "Usage: /etc/init.d/sts {start|stop|restart|status}"
+   exit 1
+  ;;
+esac
+
+exit 0

@@ -1,0 +1,5 @@
+[hostinfo]
+write.ip=192.168.1.103
+write.port=15010
+read.port=/dev/ttyACM0
+read.end_char=13
